@@ -14,13 +14,8 @@ struct Clientes {
     int ativo;
 };
 
-void limparBuffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
 bool segundoPasso(char cpf[]){
-    int soma = 0, verificador = 0;
+    int soma = 0, verificador = 0, resto = 0;
     int aux = 11;
 
     for(int i=0; i < 10; i++){
@@ -28,20 +23,22 @@ bool segundoPasso(char cpf[]){
         aux--;
     }
 
-    soma= soma % 11;
+    resto = soma % 11;
 
-    if(soma < 2){
+    if(resto < 2){
         verificador = 0;
     }
     else{
-        verificador = 11 - soma;
+        verificador = 11 - resto;
     }
 
     if(verificador == (cpf[10] - '0')){
-        return true;    //CPF válido
+        printf("\tCPF valido!\n");
+        return true;
     }
     else{
-        return false;   //CPF inválido
+        printf("\tCPF nao e valido\n");
+        return false;
     }
 }
 
@@ -54,31 +51,69 @@ bool primeiroPasso(char cpf[]){
         aux--;
     }
 
-    int verificador = 0;
-    soma = (soma % 11);
+    int verificador = 0, resto = 0;
+    resto = (soma % 11);
 
-    if(soma < 2){
+    if(resto < 2){
         verificador = 0;
     }
     else{
-        verificador = 11 - soma;
+        verificador = 11 - resto;
     }
 
     if(verificador == (cpf[9] - '0')){
-        return segundoPasso(cpf); //Primeiro dígito válido. Vai para a análise do segundo
+        return segundoPasso(cpf);
     }
     else{
-        return false; //CPF inválido
+        printf("\tCPF nao e valido! Por favor, digite novamente.\n");
+        return false;
     }
 }
 
-int verificarCPFExistente (struct Clientes *cliente, int quantidadeClientes, const char cpf[]) {
-    for (int i = 0; i < quantidadeClientes; i++) {
-        if (cliente[i].ativo == 1 && strcmp(cliente[i].cpf, cpf) == 0) {
-            return 1; //CPF já existe
+bool verificaCPF(char cpf[]){
+    bool todosIguais = true;
+    int soNumero = 1;
+
+    if (strlen(cpf) != 11){
+        printf("\tCPF precisa ter 11 digitos! Por favor, digite novamente.\n");
+        return false;
+    }
+    else{
+        for(int i=0; i < 11; i++){
+            if(cpf[i] != cpf[0]){
+                todosIguais = false;
+                break;
+            }
+        }
+
+        for (int i = 0; cpf[i] != '\0'; i++) {
+            if(!isdigit(cpf[i])){
+                soNumero = 0;
+                break;
+            }
+        }
+
+        if(todosIguais){
+            printf("\tCPF invalido! Todos os digitos sao iguais. Por favor, digite novamente.\n");
+            return false;
+        }
+        else if(!soNumero){
+            printf("\tCPF invalido! Contem caracteres nao numericos. Por favor, digite novamente.\n");
+            return false;
+        }
+        else{
+            return primeiroPasso(cpf);
         }
     }
-    return 0; //CPF não existe
+}
+
+bool cpfJaCadastrado (struct Clientes *cliente, int quantidadeClientes, const char cpf[]) {
+    for (int i = 0; i < quantidadeClientes; i++) {
+        if (cliente[i].ativo == 1 && strcmp(cliente[i].cpf, cpf) == 0) {
+            return true; //CPF já existe
+        }
+    }
+    return false; //CPF não existe
 }
 
 int validarNome (const char *nome) {
@@ -100,92 +135,81 @@ int validarNumero (const char *str) {
     return 1;
 }
 
-void cadastrarCliente (struct Clientes *cliente, int quantidadeClientes, FILE *arquivo) {
+void cadastrarCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *arquivo) {
     fseek(arquivo, 0, SEEK_END);
-    for (int i = 0; i < quantidadeClientes; i++) {
-        limparBuffer();
 
-        do {
-            printf("\t==> Digite o nome do cliente %d: ", i + 1);
-            fgets(cliente[i].nome, sizeof(cliente[i].nome), stdin);
-            cliente[i].nome[strcspn(cliente[i].nome, "\n")] = '\0';
+    int quantidade;
+    printf("\t==> Quantos clientes deseja cadastrar? ");
+    scanf("%d", &quantidade);
+    getchar(); // tirar \n
 
-            if (!validarNome(cliente[i].nome)) {
+    for (int i = 0; i < quantidade; i++) {
+        char cpf[12];
+        while (true) {
+            printf("\t==> Digite o CPF do cliente: ");
+            scanf("%11s", cpf);
+
+            if(cpfJaCadastrado(cliente, *quantidadeClientes, cpf)) {
+                printf("\tCPF já cadastrado. Tente novamente.\n");
+            } else {
+                if (verificaCPF(cpf)) {
+                    strcpy(cliente[*quantidadeClientes].cpf, cpf);
+                    cliente[*quantidadeClientes].ativo = 1;
+                    (*quantidadeClientes)++; // Incrementa a quantidade de clientes
+                    break;
+                }
+            }
+        }
+
+        do{
+            printf("\t==> Digite o nome do cliente: ");
+            scanf(" %[^\n]", cliente[*quantidadeClientes-1].nome);
+
+            if (!validarNome(cliente[*quantidadeClientes-1].nome)) {
                 printf("\tNome inválido! Por favor, insira apenas letras.\n");
             }
-        } while (!validarNome(cliente[i].nome));
+        }while(!validarNome(cliente[*quantidadeClientes-1].nome));
 
-        //validação do CPF
-        int cpfValido = 0;
-        do {
-            printf("\t==> Digite o CPF (somente os números) do cliente %d: ", i + 1);
-            fgets(cliente[i].cpf, sizeof(cliente[i].cpf), stdin);
-            cliente[i].cpf[strcspn(cliente[i].cpf, "\n")] = '\0';
-
-            if(strlen(cliente[i].cpf) != 11){
-                printf("\tCPF inválido! O CPF deve ter 11 números.\n");
-            } else if (verificarCPFExistente(cliente, quantidadeClientes, cliente[i].cpf)) {
-                printf("\tCPF já cadastrado! Por favor, insira um CPF diferente.\n");
-            } else if (!primeiroPasso(cliente[i].cpf)) {
-                printf("\tCPF inválido! Por favor, insira um CPF válido.\n");
-                limparBuffer();
-            } else {
-                cpfValido = 1; // CPF é válido
-            }
-        } while (!cpfValido);
-
-        printf("\tCPF válido!\n");
-
+        // Coleta informações do cliente
         do {
             printf("\t==> Digite o nome da rua do cliente %d: ", i + 1);
             fflush(stdin);
-            fgets(cliente[i].nomeRua, sizeof(cliente[i].nomeRua), stdin);
-            cliente[i].nomeRua[strcspn(cliente[i].nomeRua, "\n")] = '\0';
+            fgets(cliente[*quantidadeClientes - 1].nomeRua, sizeof(cliente[*quantidadeClientes - 1].nomeRua), stdin);
+            cliente[*quantidadeClientes - 1].nomeRua[strcspn(cliente[*quantidadeClientes - 1].nomeRua, "\n")] = '\0';
 
-            if (!validarNome(cliente[i].nomeRua)) {
+            if (!validarNome(cliente[*quantidadeClientes-1].nomeRua)) {
                 printf("\tNome inválido! Por favor, insira apenas letras.\n");
             }
-        } while (!validarNome(cliente[i].nomeRua));
+        } while (!validarNome(cliente[*quantidadeClientes - 1].nomeRua));
 
         do {
             printf("\t==> Digite o número da casa do cliente %d: ", i + 1);
             fflush(stdin);
-            fgets(cliente[i].numeroCasa, sizeof(cliente[i].numeroCasa), stdin);
-            cliente[i].numeroCasa[strcspn(cliente[i].numeroCasa, "\n")] = '\0';
-
-            if (!validarNumero(cliente[i].numeroCasa)) {
-                printf("\tEntrada inválida! Por favor, insira apenas números.\n");
-            }
-        } while (!validarNumero(cliente[i].numeroCasa));
+            fgets(cliente[*quantidadeClientes - 1].numeroCasa, sizeof(cliente[*quantidadeClientes - 1].numeroCasa), stdin);
+            cliente[*quantidadeClientes - 1].numeroCasa[strcspn(cliente[*quantidadeClientes - 1].numeroCasa, "\n")] = '\0';
+        } while (!validarNumero(cliente[*quantidadeClientes - 1].numeroCasa));
 
         do {
             printf("\t==> Digite o complemento (número da casa/apartamento) do cliente %d: ", i + 1);
             fflush(stdin);
-            fgets(cliente[i].complemento, sizeof(cliente[i].complemento), stdin);
-            cliente[i].complemento[strcspn(cliente[i].complemento, "\n")] = '\0';
-
-            if (!validarNumero(cliente[i].complemento)) {
-                printf("\tEntrada inválida! Por favor, insira apenas números.\n");
-            }
-        } while (!validarNumero(cliente[i].complemento));
+            fgets(cliente[*quantidadeClientes - 1].complemento, sizeof(cliente[*quantidadeClientes - 1].complemento), stdin);
+            cliente[*quantidadeClientes - 1].complemento[strcspn(cliente[*quantidadeClientes - 1].complemento, "\n")] = '\0';
+        } while (!validarNumero(cliente[*quantidadeClientes - 1].complemento));
 
         do {
             printf("\t==> Digite seu telefone (somente os números) do cliente %d: ", i + 1);
             fflush(stdin);
-            fgets(cliente[i].telefone, sizeof(cliente[i].telefone), stdin);
-            cliente[i].telefone[strcspn(cliente[i].telefone, "\n")] = '\0';
+            fgets(cliente[*quantidadeClientes - 1].telefone, sizeof(cliente[*quantidadeClientes - 1].telefone), stdin);
+            cliente[*quantidadeClientes - 1].telefone[strcspn(cliente[*quantidadeClientes - 1].telefone, "\n")] = '\0';
+        } while (!validarNumero(cliente[*quantidadeClientes - 1].telefone));
 
-            if (!validarNumero(cliente[i].telefone)) {
-                printf("\tTelefone inválido! Por favor, insira apenas números.\n");
-            }
-        } while (!validarNumero(cliente[i].telefone));
-
-        cliente[i].ativo = 1;
-
+        fprintf(arquivo, "Nome: %s\nCPF: %s\nNome da rua: %s\nNumero da rua: %s\nComplemento: %s\nTelefone: %s\nAtivo: %d\n", 
+                cliente[*quantidadeClientes - 1].nome, cliente[*quantidadeClientes - 1].cpf, 
+                cliente[*quantidadeClientes - 1].nomeRua, cliente[*quantidadeClientes - 1].numeroCasa, 
+                cliente[*quantidadeClientes - 1].complemento, cliente[*quantidadeClientes - 1].telefone, 
+                cliente[*quantidadeClientes - 1].ativo);
+        
         printf("\n\tCliente cadastrado com sucesso!\n");
-
-        fprintf(arquivo, "Nome: %s\nCPF: %s\nNome da rua: %s\nNumero da rua: %s\nComplemento: %s\nTelefone: %s\nAtivo: %d\n", cliente[i].nome, 
-        cliente[i].cpf, cliente[i].nomeRua, cliente[i].numeroCasa, cliente[i].complemento, cliente[i].telefone, cliente[i].ativo);
     }
 }
 
@@ -475,10 +499,7 @@ int main() {
 
         switch (opcao) {
             case 1:
-                printf("\t==> Quantos clientes você deseja cadastrar? ");
-                scanf("%d", &quantidadeClientes);
-                
-                cadastrarCliente(cliente, quantidadeClientes, arquivo);
+                cadastrarCliente(cliente, &quantidadeClientes, arquivo);
                 break;
             case 2:
                 printf("\t==> Deseja listar os clientes em ordem alfabética (1) ou númerica (2)? ");
