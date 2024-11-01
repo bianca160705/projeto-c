@@ -134,7 +134,7 @@ bool cpfJaCadastrado(struct Clientes *cliente, int quantidadeClientes, const cha
 {
     for (int i = 0; i < quantidadeClientes; i++)
     {
-        if (cliente[i].ativo == 1 && strcmp(cliente[i].cpf, cpf) == 0)
+        if (strcmp(cliente[i].cpf, cpf) == 0)
         {
             return true; // CPF já existe
         }
@@ -269,7 +269,7 @@ void lerClientesDoArquivo(struct Clientes *cliente, int *quantidadeClientes, FIL
                   cliente[*quantidadeClientes].complemento, cliente[*quantidadeClientes].telefone, &cliente[*quantidadeClientes].ativo) == 7)
     {
 
-        if (cliente[*quantidadeClientes].ativo == 1)
+        if (cliente[*quantidadeClientes].ativo == 1 || cliente[*quantidadeClientes].ativo == 0)
         {
             (*quantidadeClientes)++;
         }
@@ -373,7 +373,7 @@ void desativarCliente(struct Clientes *cliente, int quantidadeClientes, int idDe
 
             // reabre o arquivo em modo de escrita, truncando-o
             fclose(arquivo);
-            arquivo = fopen("pizzaria.txt", "w");
+            arquivo = fopen("clientes.txt", "w");
             if (arquivo == NULL)
             {
                 printf("\tErro ao abrir o arquivo para escrita.\n");
@@ -500,7 +500,7 @@ void excluirCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *arq
 
         // Atualizar o arquivo com a nova situação dos clientes
         fclose(arquivo);
-        arquivo = fopen("pizzaria.txt", "w");
+        arquivo = fopen("clientes.txt", "w");
         if (arquivo == NULL)
         {
             printf("\tErro ao abrir o arquivo para escrita.\n");
@@ -715,7 +715,7 @@ int main()
     int opcao, quantidadeClientes = 0, idDesativar, opcaoOrdenacao;
     char cpfConsultar[12];
 
-    arquivo = fopen("pizzaria.txt", "a+");
+    arquivo = fopen("clientes.txt", "a+");
     if (arquivo == NULL)
     {
         printf("\tProblema ao abrir o arquivo");
