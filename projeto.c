@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <locale.h>
 
 struct Clientes
 {
@@ -772,6 +773,10 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
 
 int main()
 {
+    //setlocale(LC_ALL, "Portuguese"); 
+    system("chcp 65001"); // para os caracteres especiais
+    system("cls");
+
     FILE *arquivo;
     int opcao, quantidadeClientes = 0, idDesativar, opcaoOrdenacao, idExcluir;
     char cpfConsultar[12], cpfPedido[12];
@@ -890,6 +895,7 @@ int main()
         printf("\n\tProblema ao fechar o arquivo.");
         return 1;
     }
+
 
     return 0;
 }
