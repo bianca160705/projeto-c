@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
+#include "pizza.h"
 
 struct Clientes
 {
@@ -798,11 +799,13 @@ int main()
 
     lerClientesDoArquivo(cliente, &quantidadeClientes, arquivo);
 
+    pizza();
+
     do
     {
         printf("\n");
         printf("\t************************************************\n");
-        printf("\t*         Bem-vindo a nossa pizzaria           *\n");
+        printf("\t*           Bem-vindo à Pizzada Certa!         *\n");
         printf("\t************************************************\n");
         printf("\t*    1 - Cadastrar um cliente                  *\n");
         printf("\t*    2 - Listar cliente                        *\n");
@@ -895,7 +898,6 @@ int main()
         printf("\n\tProblema ao fechar o arquivo.");
         return 1;
     }
-
 
     return 0;
 }
