@@ -45,7 +45,7 @@ bool segundoPasso(char cpf[])
     }
     else
     {
-        printf("\tCPF nao e valido\n");
+        printf("\t\tCPF não é válido\n");
         return false;
     }
 }
@@ -79,7 +79,7 @@ bool primeiroPasso(char cpf[])
     }
     else
     {
-        printf("\tCPF nao e valido! Por favor, digite novamente.\n");
+        printf("\t\tCPF não é valido! Por favor, digite novamente.\n");
         return false;
     }
 }
@@ -91,7 +91,7 @@ bool verificaCPF(char cpf[])
 
     if (strlen(cpf) != 11)
     {
-        printf("\tCPF precisa ter 11 digitos! Por favor, digite novamente.\n");
+        printf("\t\tCPF precisa ter 11 dígitos! Por favor, digite novamente.\n");
         return false;
     }
     else
@@ -116,12 +116,12 @@ bool verificaCPF(char cpf[])
 
         if (todosIguais)
         {
-            printf("\tCPF invalido! Todos os digitos sao iguais. Por favor, digite novamente.\n");
+            printf("\t\tCPF inválido! Todos os dígitos são iguais. Por favor, digite novamente.\n");
             return false;
         }
         else if (!soNumero)
         {
-            printf("\tCPF invalido! Contem caracteres nao numericos. Por favor, digite novamente.\n");
+            printf("\t\tCPF inválido! Contêm caracteres não numéricos. Por favor, digite novamente.\n");
             return false;
         }
         else
@@ -173,10 +173,10 @@ void cadastrarCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *a
     fseek(arquivo, 0, SEEK_END);
 
     int quantidade;
-    printf("\t==> Quantos clientes deseja cadastrar? ");
+    printf("\t\t==> Quantos clientes deseja cadastrar? ");
     while (scanf("%d", &quantidade) != 1) {
-            printf("\tEntrada inválida. Por favor, digite um número inteiro.");
-            printf("\n\t==> Quantos clientes deseja cadastrar? ");
+            printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
+            printf("\n\t\t==> Quantos clientes deseja cadastrar? ");
             while (getchar() != '\n');
     }
 
@@ -185,12 +185,12 @@ void cadastrarCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *a
         char cpf[12];
         while (true)
         {
-            printf("\t==> Digite o CPF do cliente: ");
+            printf("\t\t==> Digite o CPF do cliente: ");
             scanf("%11s", cpf);
 
             if (cpfJaCadastrado(cliente, *quantidadeClientes, cpf))
             {
-                printf("\tCPF já cadastrado. Tente novamente.\n");
+                printf("\t\tCPF já cadastrado. Tente novamente.\n");
             }
             else
             {
@@ -206,65 +206,65 @@ void cadastrarCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *a
 
         do
         {
-            printf("\t==> Digite o nome do cliente: ");
+            printf("\t\t==> Digite o nome do cliente: ");
             scanf(" %[^\n]", cliente[*quantidadeClientes - 1].nome);
 
             if (!validarNome(cliente[*quantidadeClientes - 1].nome))
             {
-                printf("\tNome inválido! Por favor, insira apenas letras.\n");
+                printf("\t\tNome inválido! Por favor, insira apenas letras.\n");
             }
         } while (!validarNome(cliente[*quantidadeClientes - 1].nome));
 
         // Coleta informações do cliente
         do
         {
-            printf("\t==> Digite o nome da rua do cliente %d: ", i + 1);
+            printf("\t\t==> Digite o nome da rua do cliente %d: ", i + 1);
             fflush(stdin);
             fgets(cliente[*quantidadeClientes - 1].nomeRua, sizeof(cliente[*quantidadeClientes - 1].nomeRua), stdin);
             cliente[*quantidadeClientes - 1].nomeRua[strcspn(cliente[*quantidadeClientes - 1].nomeRua, "\n")] = '\0';
 
             if (!validarNome(cliente[*quantidadeClientes - 1].nomeRua))
             {
-                printf("\tNome inválido! Por favor, insira apenas letras.\n");
+                printf("\t\tNome inválido! Por favor, insira apenas letras.\n");
             }
         } while (!validarNome(cliente[*quantidadeClientes - 1].nomeRua));
 
         do
         {
-            printf("\t==> Digite o número da casa do cliente %d: ", i + 1);
+            printf("\t\t==> Digite o número da casa do cliente %d: ", i + 1);
             fflush(stdin);
             fgets(cliente[*quantidadeClientes - 1].numeroCasa, sizeof(cliente[*quantidadeClientes - 1].numeroCasa), stdin);
             cliente[*quantidadeClientes - 1].numeroCasa[strcspn(cliente[*quantidadeClientes - 1].numeroCasa, "\n")] = '\0';
 
             if (!validarNumero(cliente[*quantidadeClientes - 1].numeroCasa))
             {
-                printf("\tEntrada inválida! Por favor, insira apenas números.\n");
+                printf("\t\tEntrada inválida! Por favor, insira apenas números.\n");
             }
         } while (!validarNumero(cliente[*quantidadeClientes - 1].numeroCasa));
 
         do
         {
-            printf("\t==> Digite o complemento (número da casa/apartamento) do cliente %d: ", i + 1);
+            printf("\t\t==> Digite o complemento (número da casa/apartamento) do cliente %d: ", i + 1);
             fflush(stdin);
             fgets(cliente[*quantidadeClientes - 1].complemento, sizeof(cliente[*quantidadeClientes - 1].complemento), stdin);
             cliente[*quantidadeClientes - 1].complemento[strcspn(cliente[*quantidadeClientes - 1].complemento, "\n")] = '\0';
 
             if (!validarNumero(cliente[*quantidadeClientes - 1].complemento))
             {
-                printf("\tEntrada inválida! Por favor, insira apenas números.\n");
+                printf("\t\tEntrada inválida! Por favor, insira apenas números.\n");
             }
         } while (!validarNumero(cliente[*quantidadeClientes - 1].complemento));
 
         do
         {
-            printf("\t==> Digite seu telefone (somente os números) do cliente %d: ", i + 1);
+            printf("\t\t==> Digite seu telefone (somente os números) do cliente %d: ", i + 1);
             fflush(stdin);
             fgets(cliente[*quantidadeClientes - 1].telefone, sizeof(cliente[*quantidadeClientes - 1].telefone), stdin);
             cliente[*quantidadeClientes - 1].telefone[strcspn(cliente[*quantidadeClientes - 1].telefone, "\n")] = '\0';
 
             if (!validarNumero(cliente[*quantidadeClientes - 1].telefone))
             {
-                printf("\tEntrada inválida! Por favor, insira apenas números.\n");
+                printf("\t\tEntrada inválida! Por favor, insira apenas números.\n");
             }
         } while (!validarNumero(cliente[*quantidadeClientes - 1].telefone));
 
@@ -274,7 +274,7 @@ void cadastrarCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *a
                 cliente[*quantidadeClientes - 1].complemento, cliente[*quantidadeClientes - 1].telefone,
                 cliente[*quantidadeClientes - 1].ativo);
 
-        printf("\n\tCliente cadastrado com sucesso!\n");
+        printf("\n\t\tCliente cadastrado com sucesso!\n");
     }
 }
 
@@ -388,14 +388,14 @@ void desativarCliente(struct Clientes *cliente, int quantidadeClientes, int idDe
         {
             cliente[i].ativo = 0;
             encontrado = 1;
-            printf("\tCliente desativado com sucesso.\n");
+            printf("\t\tCliente desativado com sucesso.\n");
 
             // reabre o arquivo em modo de escrita, truncando-o
             fclose(arquivo);
             arquivo = fopen("clientes.txt", "w");
             if (arquivo == NULL)
             {
-                printf("\tErro ao abrir o arquivo para escrita.\n");
+                printf("\t\tErro ao abrir o arquivo para escrita.\n");
                 return;
             }
 
@@ -413,7 +413,7 @@ void desativarCliente(struct Clientes *cliente, int quantidadeClientes, int idDe
 
     if (!encontrado)
     {
-        printf("\tEste cliente não existe.\n");
+        printf("\t\tEste cliente não existe.\n");
     }
 }
 
@@ -421,7 +421,7 @@ void listarCliente(struct Clientes *cliente, int quantidadeClientes, int opcaoOr
 {
     if (quantidadeClientes == 0)
     {
-        printf("\n\tNenhum cliente cadastrado.\n");
+        printf("\n\t\tNenhum cliente cadastrado.\n");
         return;
     }
 
@@ -435,25 +435,25 @@ void listarCliente(struct Clientes *cliente, int quantidadeClientes, int opcaoOr
     }
     else
     {
-        printf("\n\tOpção inválida.\n");
+        printf("\n\t\tOpção inválida.\n");
         return;
     }
 
-    printf("\n\tLista de clientes:\n");
-    printf("\t************************************************\n");
+    printf("\n\t\tLista de clientes:\n");
+    printf("\t\t************************************************\n");
 
     for (int i = 0; i < quantidadeClientes; i++)
     {
         if (cliente[i].ativo == 1)
         {
-            printf("\tCliente %d\n", i + 1);
-            printf("\tNome: %s\n", cliente[i].nome);
-            printf("\tCPF: %s\n", cliente[i].cpf);
-            printf("\tNome da rua: %s\n", cliente[i].nomeRua);
-            printf("\tNúmero da rua: %s\n", cliente[i].numeroCasa);
-            printf("\tComplemento: %s\n", cliente[i].complemento);
-            printf("\tTelefone: %s\n", cliente[i].telefone);
-            printf("\t************************************************\n");
+            printf("\t\tCliente %d\n", i + 1);
+            printf("\t\tNome: %s\n", cliente[i].nome);
+            printf("\t\tCPF: %s\n", cliente[i].cpf);
+            printf("\t\tNome da rua: %s\n", cliente[i].nomeRua);
+            printf("\t\tNúmero da rua: %s\n", cliente[i].numeroCasa);
+            printf("\t\tComplemento: %s\n", cliente[i].complemento);
+            printf("\t\tTelefone: %s\n", cliente[i].telefone);
+            printf("\t\t************************************************\n");
         }
     }
 }
@@ -477,13 +477,13 @@ void consultarCliente(struct Clientes *cliente, int quantidadeClientes, char cpf
 
         if (comparar == 0)
         {
-            printf("\n\t************************************************\n");
-            printf("\tNome: %s\n", cliente[meio].nome);
-            printf("\tCPF: %s\n", cliente[meio].cpf);
-            printf("\tEndereço: %s\n", cliente[meio].nomeRua);
-            printf("\tNúmero da rua: %s\n", cliente[meio].numeroCasa);
-            printf("\tComplemento: %s\n", cliente[meio].complemento);
-            printf("\tTelefone: %s\n", cliente[meio].telefone);
+            printf("\n\t\t************************************************\n");
+            printf("\t\tNome: %s\n", cliente[meio].nome);
+            printf("\t\tCPF: %s\n", cliente[meio].cpf);
+            printf("\t\tEndereço: %s\n", cliente[meio].nomeRua);
+            printf("\t\tNúmero da rua: %s\n", cliente[meio].numeroCasa);
+            printf("\t\tComplemento: %s\n", cliente[meio].complemento);
+            printf("\t\tTelefone: %s\n", cliente[meio].telefone);
 
             encontrado = 1;
             break;
@@ -500,7 +500,7 @@ void consultarCliente(struct Clientes *cliente, int quantidadeClientes, char cpf
 
     if (!encontrado)
     {
-        printf("\tCPF não cadastrado.\n");
+        printf("\t\tCPF não cadastrado.\n");
     }
 }
 
@@ -509,14 +509,14 @@ void excluirCliente(struct Clientes *cliente, int *quantidadeClientes, int idExc
     if (idExcluir >= 0 && idExcluir < *quantidadeClientes)
     {
         cliente[idExcluir].ativo = 2; // Marcar para excluir
-        printf("\tCliente excluído com sucesso.\n");
+        printf("\t\tCliente excluído com sucesso.\n");
 
         // Atualizar o arquivo com a nova situação dos clientes
         fclose(arquivo);
         arquivo = fopen("clientes.txt", "w");
         if (arquivo == NULL)
         {
-            printf("\tErro ao abrir o arquivo para escrita.\n");
+            printf("\t\tErro ao abrir o arquivo para escrita.\n");
             return;
         }
 
@@ -531,7 +531,7 @@ void excluirCliente(struct Clientes *cliente, int *quantidadeClientes, int idExc
     }
     else
     {
-        printf("\tNúmero inválido.\n");
+        printf("\t\tNúmero inválido.\n");
     }
 }
 
@@ -560,18 +560,18 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
 
     do
     {
-        printf("\t==> Digite o CPF do cliente para realizar o pedido: ");
+        printf("\t\t==> Digite o CPF do cliente para realizar o pedido: ");
         scanf("%s", &cpf);
 
         while(verificaCPF(cpf) == false){
-            printf("\t==> Digite o CPF do cliente para realizar o pedido: ");
+            printf("\t\t==> Digite o CPF do cliente para realizar o pedido: ");
             scanf("%s", &cpf);
         }
 
         struct Clientes *cliente = buscarCliente(clientes, quantidadeClientes, cpf);
         if (cliente == NULL)
         {
-            printf("\tCliente não encontrado ou inativo.\n");
+            printf("\t\tCliente não encontrado ou inativo.\n");
             return;
         }
 
@@ -588,19 +588,19 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
         do
         {
             printf("\n");
-            printf("\t************************************************\n");
-            printf("\t*                    Menu                      *\n");
-            printf("\t************************************************\n");
-            printf("\t*     Escolha o sabor:                         *\n");
-            printf("\t*     1 - Calabresa                            *\n");
-            printf("\t*     2 - Quatro Queijos                       *\n");
-            printf("\t*     3 - Frango com Catupiry                  *\n");
-            printf("\t************************************************\n");
-            printf("\n\t==> Digite o número do sabor desejado: ");
+            printf("\t\t************************************************\n");
+            printf("\t\t*                    Menu                      *\n");
+            printf("\t\t************************************************\n");
+            printf("\t\t*     Escolha o sabor:                         *\n");
+            printf("\t\t*     1 - Calabresa                            *\n");
+            printf("\t\t*     2 - Quatro Queijos                       *\n");
+            printf("\t\t*     3 - Frango com Catupiry                  *\n");
+            printf("\t\t************************************************\n");
+            printf("\n\t\t==> Digite o número do sabor desejado: ");
 
             while(scanf("%d", &sabor) != 1){
-                printf("\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                printf("\t==> Digite o número do sabor desejado: ");
+                printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                printf("\t\t==> Digite o número do sabor desejado: ");
                 while (getchar() != '\n');
             };
 
@@ -611,20 +611,20 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
             case 1:
                 strcpy(saborEscolhido, "Calabresa");
                 printf("\n");
-                printf("\t************************************************\n");
-                printf("\t*            Você escolheu Calabresa.          *\n");
-                printf("\t************************************************\n");
-                printf("\t*            Escolha o tamanho:                *\n");
-                printf("\t*        1 - Pequena (4 fatias) - R$20.00      *\n");
-                printf("\t*        2 - Média (8 fatias) - R$30.00        *\n");
-                printf("\t*        3 - Grande (12 fatias) - R$40.00      *\n");
-                printf("\t************************************************\n");
-                printf("\n\t==> Digite o número do tamanho desejado: ");
+                printf("\t\t************************************************\n");
+                printf("\t\t*            Você escolheu Calabresa.          *\n");
+                printf("\t\t************************************************\n");
+                printf("\t\t*            Escolha o tamanho:                *\n");
+                printf("\t\t*        1 - Pequena (4 fatias) - R$20.00      *\n");
+                printf("\t\t*        2 - Média (8 fatias) - R$30.00        *\n");
+                printf("\t\t*        3 - Grande (12 fatias) - R$40.00      *\n");
+                printf("\t\t************************************************\n");
+                printf("\n\t\t==> Digite o número do tamanho desejado: ");
                 fflush(stdin);
 
                 while(scanf("%d", &tamanho) != 1){
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t==> Digite o número do tamanho desejado: ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                    printf("\t\t==> Digite o número do tamanho desejado: ");
                     while (getchar() != '\n');
                 };
 
@@ -640,19 +640,19 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
             case 2:
                 strcpy(saborEscolhido, "Quatro Queijos");
                 printf("\n");
-                printf("\t************************************************\n");
-                printf("\t*         Você escolheu Quatro Queijos.        *\n");
-                printf("\t************************************************\n");
-                printf("\t*            Escolha o tamanho:                *\n");
-                printf("\t*         1 - Pequena (4 fatias) - R$25.00     *\n");
-                printf("\t*         2 - Média (8 fatias) - R$35.00       *\n");
-                printf("\t*         3 - Grande (12 fatias) - R$45.00     *\n");
-                printf("\t************************************************\n");
-                printf("\n\t==> Digite o número do tamanho desejado: ");
+                printf("\t\t************************************************\n");
+                printf("\t\t*         Você escolheu Quatro Queijos.        *\n");
+                printf("\t\t************************************************\n");
+                printf("\t\t*            Escolha o tamanho:                *\n");
+                printf("\t\t*         1 - Pequena (4 fatias) - R$25.00     *\n");
+                printf("\t\t*         2 - Média (8 fatias) - R$35.00       *\n");
+                printf("\t\t*         3 - Grande (12 fatias) - R$45.00     *\n");
+                printf("\t\t************************************************\n");
+                printf("\n\t\t==> Digite o número do tamanho desejado: ");
                 
                 while(scanf("%d", &tamanho) != 1){
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t==> Digite o número do tamanho desejado: ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                    printf("\t\t==> Digite o número do tamanho desejado: ");
                     while (getchar() != '\n');
                 };
                 
@@ -668,19 +668,19 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
             case 3:
                 strcpy(saborEscolhido, "Frango com Catupiry");
                 printf("\n");
-                printf("\t************************************************\n");
-                printf("\t*       Você escolheu Frango com Catupiry.     *\n");
-                printf("\t************************************************\n");
-                printf("\t*            Escolha o tamanho:                *\n");
-                printf("\t*       1 - Pequena (4 fatias) - R$22.00       *\n");
-                printf("\t*       2 - Média (8 fatias) - R$32.00         *\n");
-                printf("\t*       3 - Grande (12 fatias) - R$42.00       *\n");
-                printf("\t************************************************\n");
-                printf("\n\t==> Digite o número do tamanho desejado: ");
+                printf("\t\t************************************************\n");
+                printf("\t\t*       Você escolheu Frango com Catupiry.     *\n");
+                printf("\t\t************************************************\n");
+                printf("\t\t*            Escolha o tamanho:                *\n");
+                printf("\t\t*       1 - Pequena (4 fatias) - R$22.00       *\n");
+                printf("\t\t*       2 - Média (8 fatias) - R$32.00         *\n");
+                printf("\t\t*       3 - Grande (12 fatias) - R$42.00       *\n");
+                printf("\t\t************************************************\n");
+                printf("\n\t\t==> Digite o número do tamanho desejado: ");
                 
                 while(scanf("%d", &tamanho) != 1){
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t==> Digite o número do tamanho desejado: ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                    printf("\t\t==> Digite o número do tamanho desejado: ");
                     while (getchar() != '\n');
                 };
 
@@ -691,21 +691,21 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
                 else if (tamanho == 3)
                     preco = 42.0;
                 else
-                    printf("Tamanho inválido.\n");
+                    printf("\t\tTamanho inválido.\n");
                 break;
             default:
-                printf("\nSabor inválido.\n");
+                printf("\n\t\tSabor inválido.\n");
                 fclose(arquivoPedidos);
                 return;
             }
 
             if (preco > 0)
             {
-                printf("\t==> Quantas pizzas deste tipo você deseja? ");
+                printf("\t\t==> Quantas pizzas deste tipo você deseja? ");
 
                 while(scanf("%d", &quantidade) != 1){
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t==> Quantas pizzas deste tipo você deseja? ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                    printf("\t\t==> Quantas pizzas deste tipo você deseja? ");
                     while (getchar() != '\n');
                 };
 
@@ -716,7 +716,7 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
                                                                                                                                     : "grande");
             }
 
-            printf("\t==> Deseja adicionar outra pizza ao pedido? (s/n): ");
+            printf("\t\t==> Deseja adicionar outra pizza ao pedido? (s/n): ");
             
             while (1) {
                 scanf(" %c", &adicionarOutroSabor);
@@ -725,8 +725,8 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
                     adicionarOutroSabor == 'n' || adicionarOutroSabor == 'N') {
                     break; 
                 } else {
-                    printf("\tEntrada inválida. Por favor, digite 's' ou 'n'.\n");
-                    printf("\t==> Deseja adicionar outra pizza ao pedido? (s/n): ");
+                    printf("\t\tEntrada inválida. Por favor, digite 's' ou 'n'.\n");
+                    printf("\t\t==> Deseja adicionar outra pizza ao pedido? (s/n): ");
                     while (getchar() != '\n');
                 }
             }
@@ -734,15 +734,15 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
         } while (adicionarOutroSabor == 's' || adicionarOutroSabor == 'S');
 
         printf("\n");
-        printf("\t****************************************************************************\n");
-        printf("\t          Resumo do Pedido #%d:\n", idPedido);
-        printf("\t          Cliente: %s\n", cliente->nome);
-        printf("\t          CPF: %s\n", cliente->cpf);
-        printf("\t          Endereço de Entrega: Rua %s, Nº %s, Complemento: %s\n",
+        printf("    ****************************************************************************\n");
+        printf("              Resumo do Pedido #%d:\n", idPedido);
+        printf("              Cliente: %s\n", cliente->nome);
+        printf("              CPF: %s\n", cliente->cpf);
+        printf("              Endereço de Entrega: Rua %s, Nº %s, Complemento: %s\n",
                cliente->nomeRua, cliente->numeroCasa, cliente->complemento);
-        printf("\t          Quantidade Total de Pizzas: %d\n", totalQuantidade);
-        printf("\t          Total do Pedido: R$%.2f\n", totalPedido);
-        printf("\t****************************************************************************\n");
+        printf("              Quantidade Total de Pizzas: %d\n", totalQuantidade);
+        printf("              Total do Pedido: R$%.2f\n", totalPedido);
+        printf("    ****************************************************************************\n");
         printf("\n");
 
         fprintf(arquivoPedidos, "Endereco: Rua %s, Nº %s, Complemento: %s\n\n",
@@ -754,7 +754,7 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
         totalPedido = 0.0;
         totalQuantidade = 0;
 
-        printf("\t==> Deseja realizar um novo pedido para outro cliente? (s/n): ");
+        printf("\t\t==> Deseja realizar um novo pedido para outro cliente? (s/n): ");
         
         while (1) {
             scanf(" %c", &novoCliente);
@@ -763,8 +763,8 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
                 novoCliente == 'n' || novoCliente == 'N') {
                 break; 
             } else {
-                printf("\tEntrada inválida. Por favor, digite 's' ou 'n'.\n");
-                printf("\t==> Deseja realizar um novo pedido para outro cliente? (s/n): ");
+                printf("\t\tEntrada inválida. Por favor, digite 's' ou 'n'.\n");
+                printf("\t\t==> Deseja realizar um novo pedido para outro cliente? (s/n): ");
                 while (getchar() != '\n');
             }
         }
@@ -785,7 +785,7 @@ int main()
     arquivo = fopen("clientes.txt", "a+");
     if (arquivo == NULL)
     {
-        printf("\tProblema ao abrir o arquivo");
+        printf("\t\tProblema ao abrir o arquivo");
         return 1;
     }
 
@@ -793,7 +793,7 @@ int main()
     cliente = malloc(100 * sizeof(struct Clientes));
     if (cliente == NULL)
     {
-        printf("\nErro na alocação de memória.");
+        printf("\n\t\tErro na alocação de memória.");
         return 1;
     }
 
@@ -804,22 +804,22 @@ int main()
     do
     {
         printf("\n");
-        printf("\t************************************************\n");
-        printf("\t*           Bem-vindo à Pizzada Certa!         *\n");
-        printf("\t************************************************\n");
-        printf("\t*    1 - Cadastrar um cliente                  *\n");
-        printf("\t*    2 - Listar cliente                        *\n");
-        printf("\t*    3 - Consultar um cliente a partir do CPF  *\n");
-        printf("\t*    4 - Desativar um cliente                  *\n");
-        printf("\t*    5 - Excluir um cliente                    *\n");
-        printf("\t*    6 - Realizar um pedido                    *\n");
-        printf("\t*    7 - Sair                                  *\n");
-        printf("\t************************************************\n");
-        printf("\n\t==> Escolha uma opção: ");
+        printf("\t\t************************************************\n");
+        printf("\t\t*           Bem-vindo à Pizzada Certa!         *\n");
+        printf("\t\t************************************************\n");
+        printf("\t\t*    1 - Cadastrar um cliente                  *\n");
+        printf("\t\t*    2 - Listar cliente                        *\n");
+        printf("\t\t*    3 - Consultar um cliente a partir do CPF  *\n");
+        printf("\t\t*    4 - Desativar um cliente                  *\n");
+        printf("\t\t*    5 - Excluir um cliente                    *\n");
+        printf("\t\t*    6 - Realizar um pedido                    *\n");
+        printf("\t\t*    7 - Sair                                  *\n");
+        printf("\t\t************************************************\n");
+        printf("\n\t\t==> Escolha uma opção: ");
        
         while (scanf("%d", &opcao) != 1) {
-            printf("\tEntrada inválida. Por favor, digite um número inteiro.");
-            printf("\n\t==> Escolha uma opção: ");
+            printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
+            printf("\n\t\t==> Escolha uma opção: ");
             while (getchar() != '\n');
         }
 
@@ -829,33 +829,33 @@ int main()
                 cadastrarCliente(cliente, &quantidadeClientes, arquivo);
                 break;
             case 2:
-                printf("\t==> Deseja listar os clientes em ordem alfabética (1) ou númerica (2)? ");
+                printf("\t\t==> Deseja listar os clientes em ordem alfabética (1) ou númerica (2)? ");
                
                 while (scanf("%d", &opcaoOrdenacao) != 1) {
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.");
-                    printf("\n\t==> Deseja listar os clientes em ordem alfabética (1) ou númerica (2)? ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
+                    printf("\n\t\t==> Deseja listar os clientes em ordem alfabética (1) ou númerica (2)? ");
                     while (getchar() != '\n');
                 }
 
                 listarCliente(cliente, quantidadeClientes, opcaoOrdenacao);
                 break;
             case 3:
-                printf("\t==> Informe o CPF do cliente que você deseja consultar: ");
+                printf("\t\t==> Informe o CPF do cliente que você deseja consultar: ");
                 scanf("%s", &cpfConsultar);
 
                 while(verificaCPF(cpfConsultar) == false){
-                    printf("\t==> Informe o CPF do cliente que você deseja consultar: ");
+                    printf("\t\t==> Informe o CPF do cliente que você deseja consultar: ");
                     scanf("%s", &cpfConsultar);
                 }
 
                 consultarCliente(cliente, quantidadeClientes, cpfConsultar);
                 break;
             case 4:
-                printf("\t==> Informe o número do cliente que deseja desativar: ");
+                printf("\t\t==> Informe o número do cliente que deseja desativar: ");
 
                 while (scanf("%d", &idDesativar) != 1) {
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.");
-                    printf("\n\t==> Informe o número do cliente que deseja desativar: ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
+                    printf("\n\t\t==> Informe o número do cliente que deseja desativar: ");
                     while (getchar() != '\n');
                 }
                 idDesativar--;
@@ -863,11 +863,11 @@ int main()
                 desativarCliente(cliente, quantidadeClientes, idDesativar, arquivo);
                 break;
             case 5:
-                printf("\t==> Informe o número do cliente que deseja excluir: ");
+                printf("\t\t==> Informe o número do cliente que deseja excluir: ");
 
                 while (scanf("%d", &idExcluir) != 1) {
-                    printf("\tEntrada inválida. Por favor, digite um número inteiro.");
-                    printf("\n\t==> Informe o número do cliente que deseja excluir: ");
+                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
+                    printf("\n\t\t==> Informe o número do cliente que deseja excluir: ");
                     while (getchar() != '\n');
                 }
                 idExcluir--;
@@ -878,10 +878,10 @@ int main()
                 realizarPedido(cliente, quantidadeClientes);
                 break;
             case 7:
-                printf("\tSaindo do programa.\n");
+                printf("\t\tSaindo do programa.\n");
                 break;
             default:
-                printf("\tOpção inválida. Por favor, digite um dos números do menu.\n");
+                printf("\t\tOpção inválida. Por favor, digite um dos números do menu.\n");
                 break;
         }
     } while (opcao != 7);
@@ -890,12 +890,12 @@ int main()
 
     if (fclose(arquivo) == 0)
     {
-        printf("\n\tArquivo fechado corretamente.");
+        printf("\n\t\tArquivo fechado corretamente.");
         return 0;
     }
     else
     {
-        printf("\n\tProblema ao fechar o arquivo.");
+        printf("\n\t\tProblema ao fechar o arquivo.");
         return 1;
     }
 
