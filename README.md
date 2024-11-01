@@ -12,7 +12,7 @@ o que precisa fazer/arrumar/conferir:
 - se desativar um cliente deixa cadastrar o cpf de novo
 - realoc
 - arquivos:
-   *mudar o nome do arquivo "pizzaria.txt" para "clientes.txt";
-   *criar um arquivo para salvar os pedidos "pedidos.txt" -> bianca 🆗
+   -mudar o nome do arquivo "pizzaria.txt" para "clientes.txt";
+   -criar um arquivo para salvar os pedidos "pedidos.txt" -> bianca 🆗
 
   -arrumar acentos 
