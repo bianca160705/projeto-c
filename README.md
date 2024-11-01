@@ -14,5 +14,5 @@ o que precisa fazer/arrumar/conferir:
 - arquivos:
    - mudar o nome do arquivo "pizzaria.txt" para "clientes.txt"; 🆗
    - criar um arquivo para salvar os pedidos "pedidos.txt" -> bianca 🆗
-
-  -arrumar acentos 
+- arrumar acentos
+- ver se todas as estruturas foram alocadas dinamicamente
