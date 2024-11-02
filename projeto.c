@@ -185,7 +185,7 @@ void cadastrarCliente(struct Clientes *cliente, int *quantidadeClientes, FILE *a
         char cpf[12];
         while (true)
         {
-            printf("\t\t==> Digite o CPF do cliente: ");
+            printf("\t\t==> Digite o CPF do cliente (somente números): ");
             scanf("%11s", cpf);
 
             if (cpfJaCadastrado(cliente, *quantidadeClientes, cpf))
@@ -563,11 +563,11 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
 
     do
     {
-        printf("\t\t==> Digite o CPF do cliente para realizar o pedido: ");
+        printf("\t\t==> Digite o CPF do cliente para realizar o pedido (somente números): ");
         scanf("%s", &cpf);
 
         while(verificaCPF(cpf) == false){
-            printf("\t\t==> Digite o CPF do cliente para realizar o pedido: ");
+            printf("\t\t==> Digite o CPF do cliente para realizar o pedido (somente números): ");
             scanf("%s", &cpf);
         }
 
