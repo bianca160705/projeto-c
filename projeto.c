@@ -556,6 +556,9 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
     char adicionarOutroSabor, novoCliente;
     char cpf[12];
 
+    char *saborEscolhido;
+    saborEscolhido = (char*)malloc(21*sizeof(char));
+
     FILE *arquivoPedidos;
 
     do
@@ -604,99 +607,97 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
                 while (getchar() != '\n');
             };
 
-            char saborEscolhido[20];
-
             switch (sabor)
             {
-            case 1:
-                strcpy(saborEscolhido, "Calabresa");
-                printf("\n");
-                printf("\t\t************************************************\n");
-                printf("\t\t*            Você escolheu Calabresa.          *\n");
-                printf("\t\t************************************************\n");
-                printf("\t\t*            Escolha o tamanho:                *\n");
-                printf("\t\t*        1 - Pequena (4 fatias) - R$20.00      *\n");
-                printf("\t\t*        2 - Média (8 fatias) - R$30.00        *\n");
-                printf("\t\t*        3 - Grande (12 fatias) - R$40.00      *\n");
-                printf("\t\t************************************************\n");
-                printf("\n\t\t==> Digite o número do tamanho desejado: ");
-                fflush(stdin);
+                case 1:
+                    strcpy(saborEscolhido, "Calabresa");
+                    printf("\n");
+                    printf("\t\t************************************************\n");
+                    printf("\t\t*            Você escolheu Calabresa.          *\n");
+                    printf("\t\t************************************************\n");
+                    printf("\t\t*            Escolha o tamanho:                *\n");
+                    printf("\t\t*        1 - Pequena (4 fatias) - R$20.00      *\n");
+                    printf("\t\t*        2 - Média (8 fatias) - R$30.00        *\n");
+                    printf("\t\t*        3 - Grande (12 fatias) - R$40.00      *\n");
+                    printf("\t\t************************************************\n");
+                    printf("\n\t\t==> Digite o número do tamanho desejado: ");
+                    fflush(stdin);
 
-                while(scanf("%d", &tamanho) != 1){
-                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t\t==> Digite o número do tamanho desejado: ");
-                    while (getchar() != '\n');
-                };
+                    while(scanf("%d", &tamanho) != 1){
+                        printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                        printf("\t\t==> Digite o número do tamanho desejado: ");
+                        while (getchar() != '\n');
+                    };
 
-                if (tamanho == 1)
-                    preco = 20.0;
-                else if (tamanho == 2)
-                    preco = 30.0;
-                else if (tamanho == 3)
-                    preco = 40.0;
-                else
-                    printf("Tamanho inválido.\n");
-                break;
-            case 2:
-                strcpy(saborEscolhido, "Quatro Queijos");
-                printf("\n");
-                printf("\t\t************************************************\n");
-                printf("\t\t*         Você escolheu Quatro Queijos.        *\n");
-                printf("\t\t************************************************\n");
-                printf("\t\t*            Escolha o tamanho:                *\n");
-                printf("\t\t*         1 - Pequena (4 fatias) - R$25.00     *\n");
-                printf("\t\t*         2 - Média (8 fatias) - R$35.00       *\n");
-                printf("\t\t*         3 - Grande (12 fatias) - R$45.00     *\n");
-                printf("\t\t************************************************\n");
-                printf("\n\t\t==> Digite o número do tamanho desejado: ");
-                
-                while(scanf("%d", &tamanho) != 1){
-                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t\t==> Digite o número do tamanho desejado: ");
-                    while (getchar() != '\n');
-                };
-                
-                if (tamanho == 1)
-                    preco = 25.0;
-                else if (tamanho == 2)
-                    preco = 35.0;
-                else if (tamanho == 3)
-                    preco = 45.0;
-                else
-                    printf("Tamanho inválido.\n");
-                break;
-            case 3:
-                strcpy(saborEscolhido, "Frango com Catupiry");
-                printf("\n");
-                printf("\t\t************************************************\n");
-                printf("\t\t*       Você escolheu Frango com Catupiry.     *\n");
-                printf("\t\t************************************************\n");
-                printf("\t\t*            Escolha o tamanho:                *\n");
-                printf("\t\t*       1 - Pequena (4 fatias) - R$22.00       *\n");
-                printf("\t\t*       2 - Média (8 fatias) - R$32.00         *\n");
-                printf("\t\t*       3 - Grande (12 fatias) - R$42.00       *\n");
-                printf("\t\t************************************************\n");
-                printf("\n\t\t==> Digite o número do tamanho desejado: ");
-                
-                while(scanf("%d", &tamanho) != 1){
-                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
-                    printf("\t\t==> Digite o número do tamanho desejado: ");
-                    while (getchar() != '\n');
-                };
+                    if (tamanho == 1)
+                        preco = 20.0;
+                    else if (tamanho == 2)
+                        preco = 30.0;
+                    else if (tamanho == 3)
+                        preco = 40.0;
+                    else
+                        printf("Tamanho inválido.\n");
+                    break;
+                case 2:
+                    strcpy(saborEscolhido, "Quatro Queijos");
+                    printf("\n");
+                    printf("\t\t************************************************\n");
+                    printf("\t\t*         Você escolheu Quatro Queijos.        *\n");
+                    printf("\t\t************************************************\n");
+                    printf("\t\t*            Escolha o tamanho:                *\n");
+                    printf("\t\t*         1 - Pequena (4 fatias) - R$25.00     *\n");
+                    printf("\t\t*         2 - Média (8 fatias) - R$35.00       *\n");
+                    printf("\t\t*         3 - Grande (12 fatias) - R$45.00     *\n");
+                    printf("\t\t************************************************\n");
+                    printf("\n\t\t==> Digite o número do tamanho desejado: ");
+                    
+                    while(scanf("%d", &tamanho) != 1){
+                        printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                        printf("\t\t==> Digite o número do tamanho desejado: ");
+                        while (getchar() != '\n');
+                    };
+                    
+                    if (tamanho == 1)
+                        preco = 25.0;
+                    else if (tamanho == 2)
+                        preco = 35.0;
+                    else if (tamanho == 3)
+                        preco = 45.0;
+                    else
+                        printf("Tamanho inválido.\n");
+                    break;
+                case 3:
+                    strcpy(saborEscolhido, "Frango com Catupiry");
+                    printf("\n");
+                    printf("\t\t************************************************\n");
+                    printf("\t\t*       Você escolheu Frango com Catupiry.     *\n");
+                    printf("\t\t************************************************\n");
+                    printf("\t\t*            Escolha o tamanho:                *\n");
+                    printf("\t\t*       1 - Pequena (4 fatias) - R$22.00       *\n");
+                    printf("\t\t*       2 - Média (8 fatias) - R$32.00         *\n");
+                    printf("\t\t*       3 - Grande (12 fatias) - R$42.00       *\n");
+                    printf("\t\t************************************************\n");
+                    printf("\n\t\t==> Digite o número do tamanho desejado: ");
+                    
+                    while(scanf("%d", &tamanho) != 1){
+                        printf("\t\tEntrada inválida. Por favor, digite um número inteiro.\n");
+                        printf("\t\t==> Digite o número do tamanho desejado: ");
+                        while (getchar() != '\n');
+                    };
 
-                if (tamanho == 1)
-                    preco = 22.0;
-                else if (tamanho == 2)
-                    preco = 32.0;
-                else if (tamanho == 3)
-                    preco = 42.0;
-                else
-                    printf("\t\tTamanho inválido.\n");
-                break;
-            default:
-                printf("\n\t\tSabor inválido.\n");
-                fclose(arquivoPedidos);
-                return;
+                    if (tamanho == 1)
+                        preco = 22.0;
+                    else if (tamanho == 2)
+                        preco = 32.0;
+                    else if (tamanho == 3)
+                        preco = 42.0;
+                    else
+                        printf("\t\tTamanho inválido.\n");
+                    break;
+                    default:
+                        printf("\n\t\tSabor inválido.\n");
+                        fclose(arquivoPedidos);
+                        return;
             }
 
             if (preco > 0)
@@ -770,6 +771,8 @@ void realizarPedido(struct Clientes *clientes, int quantidadeClientes)
         }
 
     } while (novoCliente == 's' || novoCliente == 'S');
+
+    free(saborEscolhido);
 }
 
 int main()
@@ -781,6 +784,7 @@ int main()
     FILE *arquivo;
     int opcao, quantidadeClientes = 0, idDesativar, opcaoOrdenacao, idExcluir;
     char cpfConsultar[12], cpfPedido[12];
+    int capacidadeClientes = 10;
 
     arquivo = fopen("clientes.txt", "a+");
     if (arquivo == NULL)
@@ -789,13 +793,22 @@ int main()
         return 1;
     }
 
-    struct Clientes *cliente;
-    cliente = malloc(100 * sizeof(struct Clientes));
+    struct Clientes *cliente = malloc(capacidadeClientes * sizeof(struct Clientes));
     if (cliente == NULL)
     {
         printf("\n\t\tErro na alocação de memória.");
         return 1;
     }
+
+    // se a quantidade de clientes ultrapassar a capacidade alocada fazemos um realloc com o dobro de capacidade
+    if (quantidadeClientes >= capacidadeClientes) {
+        capacidadeClientes *= 2;
+        cliente = realloc(cliente, capacidadeClientes * sizeof(struct Clientes));
+        if (cliente == NULL) {
+            printf("\n\t\tErro ao realocar memória.");
+            return 1;
+        }
+    }   
 
     lerClientesDoArquivo(cliente, &quantidadeClientes, arquivo);
 
