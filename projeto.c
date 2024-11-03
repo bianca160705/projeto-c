@@ -333,6 +333,7 @@ void quickSortAlfabetica(struct Clientes *cliente, int inicio, int fim)
     }
 }
 
+// troca para ordenação de acordo com o cpf
 void quickSortNumerica(struct Clientes *cliente, int inicio, int fim)
 {
     if (inicio < fim)
@@ -340,18 +341,17 @@ void quickSortNumerica(struct Clientes *cliente, int inicio, int fim)
         int i = inicio;
         int j = fim;
         struct Clientes temp;
-
-        int pivor = (inicio + fim) / 2;
-        struct Clientes pivotElement = cliente[pivor];
+        int pivotIndex = (inicio + fim) / 2;
+        struct Clientes pivotElement = cliente[pivotIndex];
 
         while (i <= j)
         {
-            while (cliente[i].ativo == 1 && atoi(cliente[i].numeroCasa) < atoi(pivotElement.numeroCasa))
+            // substituido atoi para strcmp, fazendo funcionar
+            while (cliente[i].ativo == 1 && strcmp(cliente[i].cpf, pivotElement.cpf) < 0)
             {
                 i++;
             }
-
-            while (cliente[j].ativo == 1 && atoi(cliente[j].numeroCasa) > atoi(pivotElement.numeroCasa))
+            while (cliente[j].ativo == 1 && strcmp(cliente[j].cpf, pivotElement.cpf) > 0)
             {
                 j--;
             }
