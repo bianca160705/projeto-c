@@ -8,7 +8,7 @@ o que precisa fazer/arrumar/conferir:
 - pedido (logica estranha) -> bianca 🆗
 - cadastrar (se colocar letra fica em loop infinito) -> laura 🆗
 - verificar listar numerico -> laura 🆗
-- excluir e desativar cliente, fazer pelo cpf (nao id) -> yasmin
+- excluir e desativar cliente, fazer pelo cpf (nao id) -> yasmin 🆗
 - se desativar um cliente deixa cadastrar o cpf de novo -> laura 🆗
 - realoc -> laura 🆗
 - arquivos:
