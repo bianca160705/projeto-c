@@ -378,19 +378,17 @@ void quickSortNumerica(struct Clientes *cliente, int inicio, int fim)
     }
 }
 
-void desativarCliente(struct Clientes *cliente, int quantidadeClientes, int idDesativar, FILE *arquivo)
+void desativarCliente(struct Clientes *cliente, int quantidadeClientes, const char *cpfDesativar, FILE *arquivo)
 {
     int encontrado = 0;
 
     for (int i = 0; i < quantidadeClientes; i++)
     {
-        if (idDesativar == i)
+        if (strcmp(cliente[i].cpf, cpfDesativar) == 0)
         {
             cliente[i].ativo = 0;
             encontrado = 1;
-            printf("\t\tCliente desativado com sucesso.\n");
 
-            // reabre o arquivo em modo de escrita, truncando-o
             fclose(arquivo);
             arquivo = fopen("clientes.txt", "w");
             if (arquivo == NULL)
@@ -399,7 +397,6 @@ void desativarCliente(struct Clientes *cliente, int quantidadeClientes, int idDe
                 return;
             }
 
-            // reescreve todos os clientes (ativos) no arquivo
             for (int j = 0; j < quantidadeClientes; j++)
             {
                 fprintf(arquivo, "Nome: %s\nCPF: %s\nNome da rua: %s\nNumero da rua: %s\nComplemento: %s\nTelefone: %s\nAtivo: %d\n",
@@ -413,9 +410,10 @@ void desativarCliente(struct Clientes *cliente, int quantidadeClientes, int idDe
 
     if (!encontrado)
     {
-        printf("\t\tEste cliente não existe.\n");
+        printf("\t\tCliente com CPF %s não encontrado.\n", cpfDesativar);
     }
 }
+
 
 void listarCliente(struct Clientes *cliente, int quantidadeClientes, int opcaoOrdenacao)
 {
@@ -504,35 +502,43 @@ void consultarCliente(struct Clientes *cliente, int quantidadeClientes, char cpf
     }
 }
 
-void excluirCliente(struct Clientes *cliente, int *quantidadeClientes, int idExcluir, FILE *arquivo)
+void excluirCliente(struct Clientes *cliente, int *quantidadeClientes, const char *cpfExcluir, FILE *arquivo)
 {
-    if (idExcluir >= 0 && idExcluir < *quantidadeClientes)
+    int encontrado = 0;
+
+    for (int i = 0; i < *quantidadeClientes; i++)
     {
-        cliente[idExcluir].ativo = 2; // Marcar para excluir
-        printf("\t\tCliente excluído com sucesso.\n");
-
-        // Atualizar o arquivo com a nova situação dos clientes
-        fclose(arquivo);
-        arquivo = fopen("clientes.txt", "w");
-        if (arquivo == NULL)
+        if (strcmp(cliente[i].cpf, cpfExcluir) == 0)
         {
-            printf("\t\tErro ao abrir o arquivo para escrita.\n");
-            return;
-        }
-
-        for (int i = 0; i < *quantidadeClientes; i++)
-        {
-            if (cliente[i].ativo == 1 || cliente[i].ativo == 0)
-            {
-                fprintf(arquivo, "Nome: %s\nCPF: %s\nNome da rua: %s\nNumero da rua: %s\nComplemento: %s\nTelefone: %s\nAtivo: %d\n",
-                        cliente[i].nome, cliente[i].cpf, cliente[i].nomeRua, cliente[i].numeroCasa, cliente[i].complemento, cliente[i].telefone, cliente[i].ativo);
-            }
+            cliente[i].ativo = 2;
+            encontrado = 1;
+            break;
         }
     }
-    else
-    {
-        printf("\t\tNúmero inválido.\n");
+
+    if (!encontrado) {
+        printf("\t\tCliente com CPF %s não encontrado.\n", cpfExcluir);
+        return;
     }
+
+    fclose(arquivo);
+    arquivo = fopen("clientes.txt", "w");
+    if (arquivo == NULL)
+    {
+        printf("\t\tErro ao abrir o arquivo para escrita.\n");
+        return;
+    }
+
+    for (int i = 0; i < *quantidadeClientes; i++)
+    {
+        if (cliente[i].ativo == 1 || cliente[i].ativo == 0)
+        {
+            fprintf(arquivo, "Nome: %s\nCPF: %s\nNome da rua: %s\nNumero da rua: %s\nComplemento: %s\nTelefone: %s\nAtivo: %d\n",
+                    cliente[i].nome, cliente[i].cpf, cliente[i].nomeRua, cliente[i].numeroCasa, cliente[i].complemento, cliente[i].telefone, cliente[i].ativo);
+        }
+    }
+
+    fclose(arquivo);
 }
 
 struct Clientes *buscarCliente(struct Clientes *clientes, int quantidadeClientes, const char *cpf)
@@ -863,30 +869,46 @@ int main()
 
                 consultarCliente(cliente, quantidadeClientes, cpfConsultar);
                 break;
-            case 4:
-                printf("\t\t==> Informe o número do cliente que deseja desativar: ");
+            case 4: {
+    char cpfDesativar[12];
+    printf("\t\t==> Informe o CPF do cliente que deseja desativar: ");
+    
+    while (scanf("%11s", cpfDesativar) != 1 || strlen(cpfDesativar) != 11) {
+        printf("\t\tEntrada inválida. Por favor, digite um CPF com 11 dígitos.\n");
+        printf("\t\t==> Informe o CPF do cliente que deseja desativar: ");
+        while (getchar() != '\n');
+    }
+    
+    desativarCliente(cliente, quantidadeClientes, cpfDesativar, arquivo);
+    printf("Cliente com CPF %s foi desativado com sucesso.\n", cpfDesativar);
+    break;
+}
 
-                while (scanf("%d", &idDesativar) != 1) {
-                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
-                    printf("\n\t\t==> Informe o número do cliente que deseja desativar: ");
-                    while (getchar() != '\n');
-                }
-                idDesativar--;
+case 5: {
+    char cpfExcluir[12];
+    int encontrado = 0;
 
-                desativarCliente(cliente, quantidadeClientes, idDesativar, arquivo);
+    while (!encontrado) {
+        printf("\t\t==> Informe o CPF do cliente que deseja excluir: ");
+        scanf("%11s", cpfExcluir);
+
+        for (int i = 0; i < quantidadeClientes; i++) {
+            if (strcmp(cliente[i].cpf, cpfExcluir) == 0 && cliente[i].ativo != 2) {
+                encontrado = 1;
                 break;
-            case 5:
-                printf("\t\t==> Informe o número do cliente que deseja excluir: ");
+            }
+        }
 
-                while (scanf("%d", &idExcluir) != 1) {
-                    printf("\t\tEntrada inválida. Por favor, digite um número inteiro.");
-                    printf("\n\t\t==> Informe o número do cliente que deseja excluir: ");
-                    while (getchar() != '\n');
-                }
-                idExcluir--;
+        if (!encontrado) {
+            printf("\t\tCPF não encontrado ou cliente já excluído. Tente novamente.\n");
+        }
+    }
 
-                excluirCliente(cliente, &quantidadeClientes, idExcluir, arquivo);
-                break;
+    excluirCliente(cliente, &quantidadeClientes, cpfExcluir, arquivo);
+    printf("Cliente com CPF %s foi excluído com sucesso.\n", cpfExcluir);
+    break;
+}
+
             case 6:
                 realizarPedido(cliente, quantidadeClientes);
                 break;
