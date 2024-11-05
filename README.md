@@ -11,6 +11,7 @@ o que precisa fazer/arrumar/conferir:
 - excluir e desativar cliente, fazer pelo cpf (nao id) -> yasmin 🆗
 - se desativar um cliente deixa cadastrar o cpf de novo -> laura 🆗
 - realoc -> laura 🆗
+- quando consulta um cpf que foi excluido ele aparece na primeira rodada
 - arquivos:
    - mudar o nome do arquivo "pizzaria.txt" para "clientes.txt"; -> laura 🆗
    - criar um arquivo para salvar os pedidos "pedidos.txt" -> bianca 🆗
