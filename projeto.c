@@ -476,6 +476,13 @@ void consultarCliente(struct Clientes *cliente, int quantidadeClientes, char cpf
 
         if (comparar == 0)
         {
+            if (cliente[meio].ativo == 2 || cliente[meio].ativo == 0)
+            {
+                printf("\t\tEste cliente foi excluído ou desativado.\n");
+                encontrado = 1;
+                break;
+            }
+
             printf("\n\t\t************************************************\n");
             printf("\t\tNome: %s\n", cliente[meio].nome);
             printf("\t\tCPF: %s\n", cliente[meio].cpf);
@@ -891,12 +898,12 @@ int main()
             break;
         case 3:
             printf("\t\t==> Informe o CPF do cliente que você deseja consultar: ");
-            scanf("%s", &cpfConsultar);
+            scanf("%s", cpfConsultar);
 
             while (verificaCPF(cpfConsultar) == false)
             {
                 printf("\t\t==> Informe o CPF do cliente que você deseja consultar: ");
-                scanf("%s", &cpfConsultar);
+                scanf("%s", cpfConsultar);
             }
 
             consultarCliente(cliente, quantidadeClientes, cpfConsultar);
